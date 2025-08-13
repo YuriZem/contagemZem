@@ -10,4 +10,8 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
+  {
+    path: 'modal-cadastra-produto',
+    loadComponent: () => import('./modais/modal-cadastra-produto/modal-cadastra-produto.page').then( m => m.ModalCadastraProdutoPage)
+  },
 ];
