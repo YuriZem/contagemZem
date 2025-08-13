@@ -1,13 +1,15 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>modalCadastraProduto</ion-title>
+    <ion-title>Cadastrar Produto</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">modalCadastraProduto</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-item>
+    <ion-label position="stacked">Nome do Produto</ion-label>
+    <ion-input  placeholder="Digite o nome"></ion-input>
+  </ion-item>
+  <ion-button expand="full" color="primary" (click)="salvarProduto()">
+    Salvar
+  </ion-button>
 </ion-content>

@@ -1,15 +1,14 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import {IonLabel,IonButton, IonHeader, IonToolbar, IonTitle, IonContent,IonItem, IonList,IonCol,IonRow,IonGrid} from '@ionic/angular/standalone';
 import { StorageService } from '../services/storage.service';
 import { ModalControllerService } from '../services/modalController/modal-controller.service';
 // import { Storage } from '@ionic/storage-angular';
+import { SharedIonicModule } from '../services/SharedIonicModule/shared-ionic-module.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonLabel, IonButton,IonHeader, IonToolbar, IonTitle, IonContent,IonItem, IonList,IonCol,IonRow,IonGrid,CommonModule],
+  imports: [SharedIonicModule],
   providers: [
   ]
 })
@@ -43,9 +42,10 @@ items = [
     // lógica de pesquisa, por exemplo:
     console.log('Pesquisa:', query);
   }
+
   adicionaItem(){
     console.log('aqui o item')
-    this.modalControllerService.modalFormaPagamento().then((data) => {})
+    this.modalControllerService.modalCadastraProduto().then((data) => {})
   }
 
   // adicionarItem() {

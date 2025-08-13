@@ -10,7 +10,7 @@ export class ModalControllerService {
   constructor( private modalController: ModalController,) { }
   infoSelecionada: any;
 
-  async modalFormaPagamento(): Promise<any> {
+  async modalCadastraProduto(): Promise<any> {
     let info;
     const modal = await this.modalController.create({ component: ModalCadastraProdutoPage, cssClass: 'modal-cadastra-produto' });
     await modal.present();
