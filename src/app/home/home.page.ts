@@ -14,63 +14,31 @@ import { SharedIonicModule } from '../services/SharedIonicModule/shared-ionic-mo
 })
 export class HomePage {
 items = [
-  { name: 'Item 1', visible: true, qtd: 1 },
-  { name: 'Item 2', visible: false, qtd: 2 },
-  { name: 'Item 3', visible: true, qtd: 2 },
-  { name: 'Item 4', visible: true, qtd: 2 },
-  { name: 'Item 5', visible: true, qtd: 2 },
-  { name: 'Item 6', visible: true, qtd: 2 },
+  { id:'1', name: 'Item 1', visible: true, qtd: 1 },
 ];
+
+// items : [{id:string}] = [{id:'0'}];
   constructor(
     private storageService: StorageService,
     private modalControllerService: ModalControllerService
   ) {}
 
   async ngOnInit() {
+    console.log('iniciou')
     await this.storageService.init();
-    await this.storageService.set('PRODUTOS',this.items);
-
+    this.atualizaLista()
     const valor = await this.storageService.get('PRODUTOS');
     console.log(valor);
   }
-  acao(item: any) {
-    // ação desejada, exemplo:
-    console.log('Item selecionado:', item);
-  }
-
-  pesquisar(query: string) {
-    // lógica de pesquisa, por exemplo:
-    console.log('Pesquisa:', query);
-  }
-
+  
   adicionaItem(){
     console.log('aqui o item')
     this.modalControllerService.modalCadastraProduto().then((data) => {})
   }
-
-  // adicionarItem() {
-  //   const novoItem = { name: `Item ${this.items.length + 1}`, visible: true, qtd: 1 };
-  //   this.items.push(novoItem);
-  // }
-
-  // removerItem(index: number) {
-  //   this.items.splice(index, 1);
-  // }
-
-  // atualizarItem(index: number) {
-  //   this.items[index].qtd += 1; // Exemplo de atualização
-
-  //   //.
-
-  // }
-
-  // toggleVisibility(item: any) {
-  //   item.visible = !item.visible;
-  // }
-
-  // // Exemplo de método para filtrar itens
-  // filtrarItens() {
-  //   return this.items.filter(item => item.visible);
-  // }
-  
+  atualizaLista(){
+    this.storageService.get('PRODUTOS').then((produtos) => { 
+      this.items = produtos;
+      console.log('veio aqio ',this.items)  
+      })
+  }
 }

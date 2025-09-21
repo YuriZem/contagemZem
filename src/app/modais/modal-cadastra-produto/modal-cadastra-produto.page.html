@@ -7,7 +7,7 @@
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-item>
     <ion-label position="stacked">Nome do Produto</ion-label>
-    <ion-input  placeholder="Digite o nome"></ion-input>
+    <ion-input [(ngModel)]="nomeProduto" placeholder="Digite o nome"></ion-input>
   </ion-item>
   <ion-button expand="full" color="primary" (click)="salvarProduto()">
     Salvar

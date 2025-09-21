@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedIonicModule } from '../../services/SharedIonicModule/shared-ionic-module.service';
+import { StorageService } from 'src/app/services/storage.service';
+import { async } from 'rxjs';
 
 @Component({
   selector: 'app-modal-cadastra-produto',
@@ -10,16 +12,31 @@ import { SharedIonicModule } from '../../services/SharedIonicModule/shared-ionic
 })
 export class ModalCadastraProdutoPage implements OnInit {
 
-  constructor() { }
+  constructor(private storageService:StorageService) { }
 
   ngOnInit() {
   }
 
   nomeProduto: string = '';
 
-salvarProduto() {
-  // lógica para salvar o produto
-  console.log('Produto cadastrado:', this.nomeProduto);
-  // Feche o modal ou envie o dado para o componente pai
-}
+  async salvarProduto() {
+    this.storageService.get('PRODUTOS').then(async (produtos) => { 
+      if(produtos == null){
+        produtos = [];
+        const novoProduto = { id: (1).toString(), name: this.nomeProduto, visible: true, qtd: 1 };
+        produtos.push(novoProduto);
+        await this.storageService.set('PRODUTOS', produtos);
+
+        //aqui alerta de item salvo
+      }else{
+        const novoProduto = { id: (produtos.length + 1).toString(), name: this.nomeProduto, visible: true, qtd: 1 };
+        produtos.push(novoProduto);
+        console.log(produtos)
+        await this.storageService.set('PRODUTOS', produtos);
+        //aqui alerta de item salvo
+
+      }    
+    })
+  };
+
 }

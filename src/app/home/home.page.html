@@ -2,6 +2,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Contagem Zem</ion-title>
+    <!-- <ion-buttons slot="end"> -->
+      <ion-button slot="end" (click)="atualizaLista()" >
+       <p style="font-size: xx-small;">Atualizar</p>
+      </ion-button>
+    <!-- </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 <ion-content>  
@@ -22,7 +27,7 @@
                 <h2>{{ item.name }}</h2>
                 <p>Quantidade: {{ item.qtd }}</p>
               </ion-label>
-              <ion-button slot="end" fill="outline" color="primary" (click)="acao(item)">
+              <ion-button slot="end" fill="outline" color="primary" >
                 Ação
               </ion-button>
             </ion-item>
