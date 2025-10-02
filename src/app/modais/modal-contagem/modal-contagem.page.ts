@@ -10,10 +10,13 @@ import { SharedIonicModule } from 'src/app/services/SharedIonicModule/shared-ion
   imports: [SharedIonicModule]
 })
 export class ModalContagemPage implements OnInit {
-  @Input() item: any = {};
+  @Input() produtoSelecionado: any = {};
 
   nome = 'Produto Exemplo';
   estoque = 'Seleciona o estoque';
+
+  produto = this.produtoSelecionado.produto;
+  estoqueSelecionado :any = {};
   valorDigitado = '';
 
   constructor(
@@ -23,7 +26,7 @@ export class ModalContagemPage implements OnInit {
   ngOnInit() {
   }
   ionViewWillEnter(){
-    this.nome = this.item.name;
+    this.nome = this.produtoSelecionado.name;
   }
 
   addNumero(num: string) {
@@ -49,12 +52,10 @@ export class ModalContagemPage implements OnInit {
   }
 
   async openEstoqueSelection() {
-    // Lógica para abrir a seleção de estoque
-    console.log('Abrir seleção de estoque');
-
     await this.modalControllerService.modalInvetory().then((retorno) => {
-      console.log('Modal de seleção de estoque fechado');
-      console.log('Dados retornados:', retorno);
+      this.estoque = retorno.name;
+      this.estoqueSelecionado = retorno;
+      console.log('Estoque selecionado:', this.estoqueSelecionado);
     });
   }
 }

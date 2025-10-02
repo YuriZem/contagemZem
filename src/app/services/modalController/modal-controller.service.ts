@@ -43,7 +43,7 @@ export class ModalControllerService {
     const modal = await this.modalController.create({ 
       component: ModalContagemPage,
       cssClass: 'modal-cadastra-produto'
-      ,componentProps: { item: item}
+      ,componentProps: { produtoSelecionado: item}
       });
     await modal.present();
     return modal.onDidDismiss().then((dataReturned) => {
