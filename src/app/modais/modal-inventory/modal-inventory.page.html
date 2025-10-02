@@ -1,37 +1,40 @@
 
 <ion-header>
   <ion-toolbar>
-    <ion-title (click)="dropTables()">Contagem Zem4</ion-title>
+    <ion-title >Estoques</ion-title>
     <!-- <ion-buttons slot="end"> -->
-      <ion-button slot="end" (click)="atualizaLista()" >
-       <p style="font-size: xx-small;">Atualizar </p>
+      <ion-button slot="end" (click)="newINventory()" >
+       <p style="font-size: xx-small;"> NOVO </p>
       </ion-button>
     <!-- </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 <ion-content>  
   <ion-grid>
-    <ion-row>
+    <ion-row *ngIf="new">
+      <ion-input placeholder="Nome do estoque" [(ngModel)]="nameInventory"></ion-input>
+    </ion-row>
+    <ion-row *ngIf="new">
       <ion-col>
-        <ion-button expand="full" (click)="adicionaItem()">
-          Ad item
+        <ion-button expand="full" >
+          Cancelar
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button expand="full" (click)="openModalInvetory()">
-          Ad estoque
+        <ion-button expand="full" (click)="saveInventory()" >
+          Salvar
         </ion-button>
       </ion-col>
     </ion-row>
+
+
     <ion-row>
       <ion-col>
         <ion-list>
           <ng-container *ngFor="let item of items">
-            <!-- <ion-item *ngIf="item.visible"> -->
             <ion-item>
               <ion-label>
                 <h2>{{ item.name }}</h2>
-                <p>Quantidade: {{ item.qtd_total }}</p>
               </ion-label>
               <ion-button slot="end" fill="outline" color="primary" >
                 Ação
@@ -43,3 +46,4 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+

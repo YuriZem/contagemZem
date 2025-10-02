@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { ModalCadastraProdutoPage } from 'src/app/modais/modal-cadastra-produto/modal-cadastra-produto.page';
+import { ModalInventoryPage } from 'src/app/modais/modal-inventory/modal-inventory.page';
 @Injectable({
   providedIn: 'root'
 })
@@ -23,5 +24,24 @@ export class ModalControllerService {
       this.infoSelecionada = null;
       this.infoSelecionada = info;
     });
+  }
+
+    async modalInvetory(): Promise<any> {
+    let info;
+    const modal = await this.modalController.create({ component: ModalInventoryPage, cssClass: 'modal-cadastra-produto' });
+    await modal.present();
+    return modal.onDidDismiss().then((dataReturned) => {
+      if (dataReturned.data != null) {
+        info = dataReturned.data;
+      } else {
+        info = { GRPEST01_COD: '', GRPEST01_GRP: 'Selecione o grupo' };
+      }
+      this.infoSelecionada = null;
+      this.infoSelecionada = info;
+    });
+  }
+
+  closeModal(): Promise<any> {
+    return this.modalController.dismiss();
   }
 }

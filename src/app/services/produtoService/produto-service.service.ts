@@ -1,0 +1,39 @@
+import { Injectable } from '@angular/core';
+import { DataBaseService } from '../dataBase/data-base.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProdutoServiceService {
+
+  constructor(private dataBaseService: DataBaseService) {
+    
+   }
+
+
+  async adicionarProduto(nome: string): Promise<void> {
+    await this.dataBaseService.verificaConexao()
+    const insertQuery = `INSERT INTO PRODUTO (name, qtd_total) VALUES (?, ?)`;
+    const values = [nome, 0]; // visible como 1 (true) e qtd_total como 1
+    try {
+
+      await this.dataBaseService.querySQL(insertQuery, values);
+      // console.log('Produto adicionado com sucesso!');
+    } catch (error) {
+      console.error('Erro ao adicionar produto:', error);
+    }
+  }
+
+  async obterProdutos(): Promise<any[]> {
+    await this.dataBaseService.verificaConexao()
+
+    const selectQuery = `SELECT * FROM PRODUTO`;
+    try {
+      const result = await this.dataBaseService.querySQL(selectQuery) || { rows: [] };
+      return result; // Retorna os produtos obtidos
+    } catch (error) {
+      console.error('Erro ao obter produtos:', error);
+      return [];
+    }
+  }
+}
