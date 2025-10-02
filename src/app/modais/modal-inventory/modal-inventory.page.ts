@@ -44,7 +44,7 @@ export class ModalInventoryPage implements OnInit {
   }
 
   async closeModal(): Promise<void> {
-    await this.modalController.closeModal();
+    await this.modalController.closeModal('');
   }
 
   newINventory(){
@@ -55,6 +55,7 @@ export class ModalInventoryPage implements OnInit {
     this.new = false; 
     this.nameInventory = '';
   }
+
   async getInventory(){
     await this.estoqueService.getInventory().then((data) => {
       this.items = data;
@@ -62,6 +63,11 @@ export class ModalInventoryPage implements OnInit {
     }).catch((error) => {
       console.error('Erro ao obter estoques via service:', error);
     });
+  }
+
+  selecionaInventory(item:any){
+    console.log('Item selecionado:', item);
+    this.modalController.closeModal(item);
   }
 
 }

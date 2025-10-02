@@ -109,4 +109,21 @@ export class HomePage {
       console.error('Erro ao obter produtos via service:', error);
     });
   }
+
+   openModalContagem(item?: any){
+    console.log('aqui o item')
+    this.modalControllerService.modalContagem(item).then((data) => {
+      // this.atualizaLista();
+
+    })
+  }
+  async selecionaItem(item: any){
+    console.log('seleciona item')
+
+    console.log('item selecionado', item)
+
+    await this.openModalContagem(item);
+
+    console.log('depois do modal')
+  }
 }

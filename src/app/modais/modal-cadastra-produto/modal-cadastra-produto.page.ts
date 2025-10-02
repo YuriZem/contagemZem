@@ -59,8 +59,7 @@ export class ModalCadastraProdutoPage implements OnInit {
   }
 
   async closeModal(): Promise<void> {
-    await this.modalController.closeModal
-    ();
+    await this.modalController.closeModal();
   }
 
 

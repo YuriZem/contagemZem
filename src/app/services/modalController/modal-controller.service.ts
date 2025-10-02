@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { ModalCadastraProdutoPage } from 'src/app/modais/modal-cadastra-produto/modal-cadastra-produto.page';
 import { ModalInventoryPage } from 'src/app/modais/modal-inventory/modal-inventory.page';
+import { ModalContagemPage } from 'src/app/modais/modal-contagem/modal-contagem.page';
 @Injectable({
   providedIn: 'root'
 })
@@ -26,9 +27,24 @@ export class ModalControllerService {
     });
   }
 
-    async modalInvetory(): Promise<any> {
-    let info;
+  async modalInvetory(): Promise<any> {
     const modal = await this.modalController.create({ component: ModalInventoryPage, cssClass: 'modal-cadastra-produto' });
+    await modal.present();
+    return modal.onDidDismiss().then((dataReturned) => {
+      if (dataReturned.data != null) {
+        return dataReturned.data;
+      } else {
+        return null;
+      }
+    });
+  }
+    async modalContagem(item:any): Promise<any> {
+    let info;
+    const modal = await this.modalController.create({ 
+      component: ModalContagemPage,
+      cssClass: 'modal-cadastra-produto'
+      ,componentProps: { item: item}
+      });
     await modal.present();
     return modal.onDidDismiss().then((dataReturned) => {
       if (dataReturned.data != null) {
@@ -41,7 +57,7 @@ export class ModalControllerService {
     });
   }
 
-  closeModal(): Promise<any> {
-    return this.modalController.dismiss();
+  closeModal(item?:any): Promise<any> {
+    return this.modalController.dismiss(item);
   }
 }

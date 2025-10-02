@@ -34,7 +34,7 @@
         <ion-list>
           <ng-container *ngFor="let item of items">
             <!-- <ion-item *ngIf="item.visible"> -->
-            <ion-item>
+            <ion-item (click)="selecionaItem(item)" [class.selected]="item.selected">
               <ion-label>
                 <h2>{{ item.name }}</h2>
                 <p>Quantidade: {{ item.qtd_total }}</p>

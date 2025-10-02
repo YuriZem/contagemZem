@@ -18,4 +18,8 @@ export const routes: Routes = [
     path: 'modal-inventory',
     loadComponent: () => import('./modais/modal-inventory/modal-inventory.page').then( m => m.ModalInventoryPage)
   },
+  {
+    path: 'modal-contagem',
+    loadComponent: () => import('./modais/modal-contagem/modal-contagem.page').then( m => m.ModalContagemPage)
+  },
 ];

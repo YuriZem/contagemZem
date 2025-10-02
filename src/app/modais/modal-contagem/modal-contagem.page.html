@@ -1,0 +1,84 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Contagem</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div style="display: flex; flex-direction: column; height: 100%;">
+    <!-- Parte superior: nome e estoque -->
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+      <ion-item>
+        <ion-label position="stacked">Nome</ion-label>
+        <ion-input [value]="nome" readonly></ion-input>
+      </ion-item>
+      <ion-item (click)="openEstoqueSelection()">
+        <ion-label position="stacked">Estoque</ion-label>
+        <ion-input [value]="estoque" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Quantidade</ion-label>
+        <ion-input [value]="valorDigitado" readonly></ion-input>
+      </ion-item>
+    </div>
+
+    <!-- Teclado numérico customizado -->
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end;">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" size="large" style="height: 50px; font-size: 1.5rem;" (click)="addNumero('1')">1</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="block" size="large" style="height: 50px; font-size: 1.5rem;" (click)="addNumero('2')">2</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="block" size="large" style="height: 50px; font-size: 1.5rem;" (click)="addNumero('3')">3</ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" size="large" style="height: 50px; font-size: 1.5rem;" (click)="addNumero('4')">4</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="block" size="large" style="height: 50px; font-size: 1.5rem;" (click)="addNumero('5')">5</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="block" size="large" style="height: 50px; font-size: 1.5rem;" (click)="addNumero('6')">6</ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" size="large" style="height: 50px; font-size: 1.5rem;" (click)="addNumero('7')">7</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="block" size="large" style="height: 50px; font-size: 1.5rem;" (click)="addNumero('8')">8</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="block" size="large" style="height: 50px; font-size: 1.5rem;" (click)="addNumero('9')">9</ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" size="large" style="height: 50px; font-size: 1.5rem;" color="medium" (click)="limpar()">C</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="block" size="large" style="height: 50px; font-size: 1.5rem;" (click)="addNumero('0')">0</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="block" size="large" style="height: 50px; font-size: 1.5rem;" color="medium" (click)="backspace()">&larr;</ion-button>
+          </ion-col>
+        </ion-row>
+        <!-- Botões Confirmar e Cancelar -->
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" color="danger" style="height: 60px; font-size: 1.3rem;" (click)="cancelar()">Cancelar</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="block" color="success" style="height: 60px; font-size: 1.3rem;" (click)="confirmar()">Confirmar</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>
