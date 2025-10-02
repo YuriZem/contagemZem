@@ -23,6 +23,7 @@ export class HomePage {
 // ];
 
   items : any = [];
+  filtro: string = '';
 
 // items : [{id:string}] = [{id:'0'}];
   constructor(
@@ -98,5 +99,14 @@ export class HomePage {
 
   dropTables(){
     this.dataBaseService.dropTables();
+  }
+
+  aplicaFiltro(){
+    this.produtoService.pesquisaProduto(this.filtro).then((data) => {
+      console.log('Produtos via service:', data);
+      this.items = data;
+    }).catch((error) => {
+      console.error('Erro ao obter produtos via service:', error);
+    });
   }
 }

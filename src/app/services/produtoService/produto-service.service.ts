@@ -36,4 +36,17 @@ export class ProdutoServiceService {
       return [];
     }
   }
+  async pesquisaProduto(pesquisa=''): Promise<any[]> {
+    await this.dataBaseService.verificaConexao()
+
+      const selectQuery = `SELECT * FROM PRODUTO WHERE name LIKE ?`;
+      const values = [`%${pesquisa}%`];
+    try {
+      const result = await this.dataBaseService.querySQL(selectQuery, values) || { rows: [] };
+      return result; // Retorna os produtos obtidos
+    } catch (error) {
+      console.error('Erro ao obter produtos:', error);
+      return [];
+    }
+  }
 }

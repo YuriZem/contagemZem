@@ -10,7 +10,13 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>  
-  <ion-grid>
+  <ion-grid>    
+    <ion-row>
+      <ion-input placeholder="Buscar produto" [(ngModel)]="filtro"></ion-input>
+      <ion-button (click)="aplicaFiltro()">
+        Filtrar
+      </ion-button>
+    </ion-row>
     <ion-row>
       <ion-col>
         <ion-button expand="full" (click)="adicionaItem()">
