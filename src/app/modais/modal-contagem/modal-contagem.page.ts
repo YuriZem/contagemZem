@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ContagemServiceService } from 'src/app/services/contagemService/contagem-service.service';
 import { ModalControllerService } from 'src/app/services/modalController/modal-controller.service';
 import { SharedIonicModule } from 'src/app/services/SharedIonicModule/shared-ionic-module.service';
 
@@ -21,6 +22,7 @@ export class ModalContagemPage implements OnInit {
 
   constructor(
     private modalControllerService: ModalControllerService,
+    private contagemService: ContagemServiceService
   ) { }
 
   ngOnInit() {
@@ -41,9 +43,22 @@ export class ModalContagemPage implements OnInit {
     this.valorDigitado = this.valorDigitado.slice(0, -1);
   }
 
-  confirmar() {
+  async confirmar() {
     // Lógica para confirmar a ação
     console.log('Confirmado:', this.valorDigitado);
+    console.log('Estoque selecionado:', this.estoqueSelecionado);
+    // Aqui você pode adicionar a lógica para salvar a contagem no banco de dados ou serviço
+
+    let objetoContagem = {
+      id_prod: this.produtoSelecionado.id,
+      id_estoque: this.estoqueSelecionado.id,
+      quantidade: this.valorDigitado,
+      state: true
+    };
+    console.log('Objeto contagem a ser salvo:', objetoContagem);
+    await this.contagemService.adicionaContagem(objetoContagem);
+
+    this.modalControllerService.closeModal('confirmado');
   }
 
   cancelar() {

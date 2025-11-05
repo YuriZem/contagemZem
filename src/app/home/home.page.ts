@@ -51,10 +51,13 @@ export class HomePage {
     // await this.dataBaseService.querySQL('insert into CONTAGEM (id_prod, id_estoque,quantidade,state) values (?,?,?,?)', ['1','1','10',true]);
     
     // const produtos = await this.dataBaseService.querySQL('SELECT * FROM PRODUTO');
+    // const teste = await this.dataBaseService.querySQL('SELECT P.id,P.name,P.qtd_total,IFNULL(SUM(C.quantidade), 0) AS quantidade_contada FROM PRODUTO P LEFT JOIN CONTAGEM C ON C.id_prod = P.id GROUP BY P.id, P.name, P.qtd_total');
 
+    // console.log('teste:', teste);
+    // console.log('teste:', teste);
  
     // const estoque = await this.dataBaseService.querySQL('SELECT * FROM ESTOQUE');
-    // const contagem = await this.dataBaseService.querySQL('SELECT * FROM CONTAGEM');
+    const contagem = await this.dataBaseService.querySQL('SELECT * FROM CONTAGEM');
 
     // const contagem2 = await this.dataBaseService.querySQL(
     //   `SELECT 
@@ -70,7 +73,7 @@ export class HomePage {
     
     // console.log(this.items)
     // console.log('estoque:', estoque);
-    // console.log('contagem:', contagem);
+    console.log('contagem:', contagem);
     // console.log('contagem2:', contagem2);
   }
   

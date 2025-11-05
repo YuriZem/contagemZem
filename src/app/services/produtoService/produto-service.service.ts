@@ -27,7 +27,9 @@ export class ProdutoServiceService {
   async obterProdutos(): Promise<any[]> {
     await this.dataBaseService.verificaConexao()
 
-    const selectQuery = `SELECT * FROM PRODUTO`;
+    // const selectQuery = `SELECT * FROM PRODUTO`;
+    const selectQuery = `SELECT P.id,P.name,P.qtd_total,IFNULL(SUM(C.quantidade), 0) AS quantidade_contada FROM PRODUTO P LEFT JOIN CONTAGEM C ON C.id_prod = P.id GROUP BY P.id, P.name, P.qtd_total`
+
     try {
       const result = await this.dataBaseService.querySQL(selectQuery) || { rows: [] };
       return result; // Retorna os produtos obtidos
