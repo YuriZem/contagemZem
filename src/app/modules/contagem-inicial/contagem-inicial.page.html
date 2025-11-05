@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>Contagem Inicial</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Lista de Freezers -->
+  <div *ngIf="!selectedFreezer">
+    <h2>Selecione o Freezer</h2>
+
+    <ion-list>
+      <ion-item button *ngFor="let f of freezers" (click)="selecionarFreezer(f)">
+        {{ f.nome }}
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <!-- Contagem -->
+  <div *ngIf="selectedFreezer">
+    <h2>{{ selectedFreezer.nome }}</h2>
+
+    <ion-list>
+      <ion-item *ngFor="let p of produtos">
+        <ion-label>{{ p.nome }}</ion-label>
+
+        <ion-button fill="outline" (click)="diminuir(p)">-</ion-button>
+
+        <ion-input type="number" [(ngModel)]="p.quantidade" style="width: 60px; text-align:center;"></ion-input>
+
+        <ion-button fill="outline" (click)="aumentar(p)">+</ion-button>
+      </ion-item>
+    </ion-list>
+
+    <ion-button expand="block" color="success" (click)="salvar()">Salvar Contagem Inicial</ion-button>
+    <ion-button expand="block" color="medium" (click)="selectedFreezer = null">Voltar</ion-button>
+  </div>
+
+</ion-content>

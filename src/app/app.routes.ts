@@ -5,6 +5,11 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
   },
+  // {
+  //   path: '',
+  //   redirectTo: 'contagem-inicial',
+  //   pathMatch: 'full',
+  // },
   {
     path: '',
     redirectTo: 'home',
@@ -21,5 +26,21 @@ export const routes: Routes = [
   {
     path: 'modal-contagem',
     loadComponent: () => import('./modais/modal-contagem/modal-contagem.page').then( m => m.ModalContagemPage)
+  },
+  {
+    path: 'contagem-inicial',
+    loadComponent: () => import('./modules/contagem-inicial/contagem-inicial.page').then( m => m.ContagemInicialPage)
+  },
+  {
+    path: 'contagem-final',
+    loadComponent: () => import('./modules/contagem-final/contagem-final.page').then( m => m.ContagemFinalPage)
+  },
+  {
+    path: 'vendas',
+    loadComponent: () => import('./modules/vendas/vendas.page').then( m => m.VendasPage)
+  },
+  {
+    path: 'fechamento',
+    loadComponent: () => import('./modules/fechamento/fechamento.page').then( m => m.FechamentoPage)
   },
 ];
