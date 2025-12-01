@@ -1,28 +1,33 @@
 import { Injectable } from '@angular/core';
 import { DataBaseService } from '../dataBase/data-base.service';
+import { BehaviorSubject } from 'rxjs';
+import { ConexaoServiceService } from '../conexaoService/conexao-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContagemServiceService {
 
+  private contagensSubject = new BehaviorSubject<any>([]);
+
+  contagens$ = this.contagensSubject.asObservable(); // a tela observa isso
+
   constructor(
-    private dataBaseService: DataBaseService
+    private conexaoService: ConexaoServiceService
   ) { }
 
-  async adicionaContagem(objetoContagem: any): Promise<any[]> {
-    console.log('Adicionando contagem:', objetoContagem);
-    await this.dataBaseService.verificaConexao()
-    
-    const selectQuery = ' insert into CONTAGEM (id_prod, id_estoque,quantidade,state) values (?,?,?,?)';
-    const values = [objetoContagem.id_prod, objetoContagem.id_estoque, objetoContagem.quantidade, objetoContagem.state];
-    
-    try {
-      const result = await this.dataBaseService.querySQL(selectQuery, values) || { rows: [] };
-      return result; // Retorna os produtos obtidos
-    } catch (error) {
-      console.error('Erro ao obter produtos:', error);
-      return [];
-    }
+  async adicionaContagem(objetoContagem: any) {
+    const atual = this.contagensSubject.value;
+    this.contagensSubject.next([...atual, objetoContagem]);
+    console.log('adicionado a contagem ', objetoContagem)
+  }
+
+  async buscaConferencia() {
+    await this.conexaoService.getConferencias().subscribe(retorno => {
+      console.log('aqui o retorno ', retorno)
+      // this.arrayItemsCompletos = retorno
+      // this.itensSubject.next(retorno);
+      // console.log('sdasdasd', this.itens$)
+    })
   }
 }

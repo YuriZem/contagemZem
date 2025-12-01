@@ -1,37 +1,31 @@
 import { Injectable } from '@angular/core';
 import { DataBaseService } from '../dataBase/data-base.service';
+import { BehaviorSubject } from 'rxjs';
+import { ConexaoServiceService } from '../conexaoService/conexao-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EstoqueServiceService {
   nameEstoque: string = '';
+  private itensSubject = new BehaviorSubject<any>([]);
 
-  constructor(private dataBaseService: DataBaseService) { }
+  itens$ = this.itensSubject.asObservable(); // a tela observa isso
 
-
-   async adicionarEstoque(name: string): Promise<void> {
-    await this.dataBaseService.verificaConexao()
-    const insertQuery = `INSERT INTO ESTOQUE (name) VALUES (?)`;
-    const values = [name]; // visible como 1 (true) e qtd_total como 1
-    try {
-
-      await this.dataBaseService.querySQL(insertQuery, values);
-    } catch (error) {
-      console.error('Erro ao adicionar Estoque:', error);
-    }
+  constructor(private conexaoService: ConexaoServiceService) { 
+    // this.adicionarEstoque({nome:'fre 2', id : 3})
   }
 
-  async getInventory(): Promise<any[]> {
-    await this.dataBaseService.verificaConexao()
-
-    const selectQuery = `SELECT * FROM ESTOQUE`;
-    try {
-      const result = await this.dataBaseService.querySQL(selectQuery) || { rows: [] };
-      return result; // Retorna os estoques obtidos
-    } catch (error) {
-      console.error('Erro ao obter estoques:', error);
-      return [];
-    }
+  async adicionarEstoque(novoItem: any) {
+    this.conexaoService.postEstoque(novoItem).subscribe(retorno => {
+      this.buscaEstoque()
+    })
   }
+
+  async buscaEstoque() {
+    await this.conexaoService.getEstoque().subscribe(retorno => {
+      this.itensSubject.next(retorno);
+    })
+  }
+
 }
