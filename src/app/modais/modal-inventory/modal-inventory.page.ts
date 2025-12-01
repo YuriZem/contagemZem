@@ -5,19 +5,21 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
 import { SharedIonicModule } from 'src/app/services/SharedIonicModule/shared-ionic-module.service';
 import { ModalControllerService } from 'src/app/services/modalController/modal-controller.service';
 import { EstoqueServiceService } from 'src/app/services/estoqueService/estoque-service.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-modal-inventory',
   templateUrl: './modal-inventory.page.html',
   styleUrls: ['./modal-inventory.page.scss'],
   standalone: true,
-  imports: [SharedIonicModule]  
-  
+  imports: [SharedIonicModule]
+
 })
 export class ModalInventoryPage implements OnInit {
-  nameInventory: string = '';
-  items : any = [];
-  new : boolean = false;
+  nomeEstoque: string = '';
+  itens$ = this.estoqueService.itens$;
+  novo: boolean = false;
+
 
   constructor(
     private modalController: ModalControllerService,
@@ -27,47 +29,30 @@ export class ModalInventoryPage implements OnInit {
   ngOnInit() {
   }
 
-  ionViewDidEnter(){
-    console.log('ionViewWillEnter');
-    this.getInventory()
-  }
-
-  async saveInventory() {
-    this.estoqueService.adicionarEstoque(this.nameInventory).then(() => {
-      // Aqui você pode adicionar um alerta ou notificação de sucesso
-      console.log('inventory saved successfully!');
-      this.closeModal();
-    }).catch((error) => {
-      // Aqui você pode adicionar um alerta ou notificação de erro
-      console.error('Error saving inventory:', error);
-    });
+  ionViewWillEnter() {
+    this.estoqueService.buscaEstoque().then(ret => console.log(ret))
   }
 
   async closeModal(): Promise<void> {
     await this.modalController.closeModal('');
   }
 
-  newINventory(){
-    this.new = true;
-  }
-  
-  cancelNewInventory(){
-    this.new = false; 
-    this.nameInventory = '';
+  abreCadastroEstoque() {
+    this.novo = true;
   }
 
-  async getInventory(){
-    await this.estoqueService.getInventory().then((data) => {
-      this.items = data;
-      console.log('Estoques via service:', data);
-    }).catch((error) => {
-      console.error('Erro ao obter estoques via service:', error);
-    });
+  cancelNewInventory() {
+    // this.new = false; 
+    // this.nameInventory = '';
   }
 
-  selecionaInventory(item:any){
+  selecionaInventory(item: any) {
     console.log('Item selecionado:', item);
     this.modalController.closeModal(item);
+  }
+
+  novoEstoque() {
+    this.estoqueService.adicionarEstoque({ nome: this.nomeEstoque, id: 3 })
   }
 
 }

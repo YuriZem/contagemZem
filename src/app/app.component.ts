@@ -5,7 +5,6 @@ import { StorageService } from './services/storage.service';
 import { ModalControllerService } from './services/modalController/modal-controller.service'; 
 import { ModalController } from '@ionic/angular';
 
-import { CapacitorSQLite, SQLiteConnection, SQLiteDBConnection } from '@capacitor-community/sqlite';
 import { DataBaseService } from './core/database/database.service';
 import { SeedService } from './core/database/seed.service';
 import { Router } from '@angular/router';
@@ -14,15 +13,23 @@ import { Router } from '@angular/router';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   imports: [IonApp, IonRouterOutlet],
-  providers: [Storage, StorageService,ModalController,ModalControllerService,DataBaseService,] // Adicione aqui
+  providers: [
+    Storage,
+    StorageService,
+    ModalController,
+    ModalControllerService,
+    DataBaseService,
+    // provideHttpClient
+  ] // Adicione aqui
 })
 export class AppComponent {
   constructor(
     private router: Router,
     private db: DataBaseService, 
-    private seed: SeedService
+    private seed: SeedService,
   ) {
 
+  this.router.navigateByUrl('/home');
 
     // this.initializeApp();
   }

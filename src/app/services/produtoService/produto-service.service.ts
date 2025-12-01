@@ -1,54 +1,52 @@
 import { Injectable } from '@angular/core';
 import { DataBaseService } from '../dataBase/data-base.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { ConexaoServiceService } from '../conexaoService/conexao-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProdutoServiceService {
 
-  constructor(private dataBaseService: DataBaseService) {
-    
-   }
+  private itensSubject = new BehaviorSubject<any>([]);
 
+  itens$ = this.itensSubject.asObservable(); // a tela observa isso
 
-  async adicionarProduto(nome: string): Promise<void> {
-    await this.dataBaseService.verificaConexao()
-    const insertQuery = `INSERT INTO PRODUTO (name, qtd_total) VALUES (?, ?)`;
-    const values = [nome, 0]; // visible como 1 (true) e qtd_total como 1
-    try {
+  //estou usando uma variavel para guardar o array total para poder fazer a pesquisa por que se eu pesquisar a segunda vez fica
+  //com base no retorno do primeiro filtro 
+  //devo colocar para salvar localhost caso os array fiquem grandes
+  arrayItemsCompletos: any = []; // preciso tipar 
 
-      await this.dataBaseService.querySQL(insertQuery, values);
-      // console.log('Produto adicionado com sucesso!');
-    } catch (error) {
-      console.error('Erro ao adicionar produto:', error);
-    }
+  constructor(
+    private dataBaseService: DataBaseService,
+    private conexaoService: ConexaoServiceService
+  ) {}
+
+  retornaItens() {
+    return this.itensSubject.value
   }
 
-  async obterProdutos(): Promise<any[]> {
-    await this.dataBaseService.verificaConexao()
-
-    // const selectQuery = `SELECT * FROM PRODUTO`;
-    const selectQuery = `SELECT P.id,P.name,P.qtd_total,IFNULL(SUM(C.quantidade), 0) AS quantidade_contada FROM PRODUTO P LEFT JOIN CONTAGEM C ON C.id_prod = P.id GROUP BY P.id, P.name, P.qtd_total`
-
-    try {
-      const result = await this.dataBaseService.querySQL(selectQuery) || { rows: [] };
-      return result; // Retorna os produtos obtidos
-    } catch (error) {
-      console.error('Erro ao obter produtos:', error);
-      return [];
-    }
+  async buscaProduto() {
+    await this.conexaoService.getProdutos().subscribe(retorno => {
+      console.log('aqui o retorno ', retorno )
+      this.arrayItemsCompletos = retorno
+      this.itensSubject.next(retorno);
+      console.log('sdasdasd', this.itens$)
+    })
   }
-  async pesquisaProduto(pesquisa=''): Promise<any[]> {
-    await this.dataBaseService.verificaConexao()
 
-      const selectQuery = `SELECT * FROM PRODUTO WHERE name LIKE ?`;
-      const values = [`%${pesquisa}%`];
-    try {
-      const result = await this.dataBaseService.querySQL(selectQuery, values) || { rows: [] };
-      return result; // Retorna os produtos obtidos
-    } catch (error) {
-      console.error('Erro ao obter produtos:', error);
-      return [];
-    }
+  async pesquisaProduto(pesquisa = '') {
+    //melhorar a pesquisa e talvez colocar em storage
+    const filtrados = this.arrayItemsCompletos.filter((i:any) =>
+      i.nome.toLowerCase().includes(pesquisa.toLowerCase())
+    );
+
+    this.itensSubject.next(filtrados);
+  }
+
+  async adicionarProduto(novoItem: any) {
+    await this.conexaoService.postProduto(novoItem).subscribe(retorno => {
+      this.buscaProduto()
+    })
   }
 }

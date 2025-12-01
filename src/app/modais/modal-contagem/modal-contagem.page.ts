@@ -27,8 +27,9 @@ export class ModalContagemPage implements OnInit {
 
   ngOnInit() {
   }
+
   ionViewWillEnter(){
-    this.nome = this.produtoSelecionado.name;
+    this.nome = this.produtoSelecionado.nome;
   }
 
   addNumero(num: string) {
@@ -67,8 +68,8 @@ export class ModalContagemPage implements OnInit {
   }
 
   async openEstoqueSelection() {
-    await this.modalControllerService.modalInvetory().then((retorno) => {
-      this.estoque = retorno.name;
+    await this.modalControllerService.modalEstoque().then((retorno) => {
+      this.estoque = retorno.nome;
       this.estoqueSelecionado = retorno;
       console.log('Estoque selecionado:', this.estoqueSelecionado);
     });

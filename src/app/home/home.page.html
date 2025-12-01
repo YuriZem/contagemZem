@@ -1,9 +1,9 @@
 
 <ion-header>
   <ion-toolbar>
-    <ion-title (click)="dropTables()">Contagem Zem6</ion-title>
+    <ion-title  >Contagem Zem6</ion-title>
     <!-- <ion-buttons slot="end"> -->
-      <ion-button slot="end" (click)="atualizaLista()" >
+      <ion-button slot="end" (click)="teste()" >
        <p style="font-size: xx-small;">Atualizar </p>
       </ion-button>
     <!-- </ion-buttons> -->
@@ -13,6 +13,9 @@
   <ion-grid>    
     <ion-row>
       <ion-input placeholder="Buscar produto" [(ngModel)]="filtro"></ion-input>
+      <ion-button (click)="limpar()">
+        limpar
+      </ion-button>
       <ion-button (click)="aplicaFiltro()">
         Filtrar
       </ion-button>
@@ -24,20 +27,25 @@
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button expand="full" (click)="openModalInvetory()">
+        <ion-button expand="full" (click)="modalEstoque()">
           Ad estoque
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="full" (click)="abreListaContagens()">
+          listagem estoque
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
         <ion-list>
-          <ng-container *ngFor="let item of items">
+          <ng-container *ngFor="let item of itens | async">
             <!-- <ion-item *ngIf="item.visible"> -->
             <ion-item (click)="selecionaItem(item)" [class.selected]="item.selected">
               <ion-label>
-                <h2>{{ item.name }}</h2>
-                <p>Quantidade: {{ item.quantidade_contada }}</p>
+                <h2>{{ item.nome }}</h2>
+                <p>Quantidade geral : {{ item.quantidade_geral}}</p>
               </ion-label>
               <ion-button slot="end" fill="outline" color="primary" >
                 Ação

@@ -26,41 +26,18 @@ export class ModalCadastraProdutoPage implements OnInit {
 
   nomeProduto: string = '';
 
-  // async salvarProduto() {
-  //   this.storageService.get('PRODUTOS').then(async (produtos) => { 
-  //     if(produtos == null){
-  //       produtos = [];
-  //       const novoProduto = { id: (1).toString(), name: this.nomeProduto, visible: true, qtd: 1 };
-  //       produtos.push(novoProduto);
-  //       await this.storageService.set('PRODUTOS', produtos);
-
-  //       //aqui alerta de item salvo
-  //     }else{
-  //       const novoProduto = { id: (produtos.length + 1).toString(), name: this.nomeProduto, visible: true, qtd: 1 };
-  //       produtos.push(novoProduto);
-  //       console.log(produtos)
-  //       await this.storageService.set('PRODUTOS', produtos);
-  //       //aqui alerta de item salvo
-
-  //     }    
-  //   })
-  // };
-
-
   async salvarProduto() {
-   this.produtoService.adicionarProduto(this.nomeProduto).then(() => {
-      // Aqui você pode adicionar um alerta ou notificação de sucesso
-      console.log('Produto salvo com sucesso!');
-      this.closeModal();
-    }).catch((error) => {
-      // Aqui você pode adicionar um alerta ou notificação de erro
-      console.error('Erro ao salvar o produto:', error);
-    });
+    await this.produtoService.adicionarProduto({nome:this.nomeProduto,id:44,quantidade_contagem:0})
+  };
+
+  async modalSalvarProduto(){
+    let objProd = {nome :this.nomeProduto} 
+    this.produtoService.adicionarProduto(objProd).catch(teste => {
+      console.log('teste')
+    })
   }
 
   async closeModal(): Promise<void> {
     await this.modalController.closeModal();
   }
-
-
 }

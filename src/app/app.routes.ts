@@ -43,4 +43,10 @@ export const routes: Routes = [
     path: 'fechamento',
     loadComponent: () => import('./modules/fechamento/fechamento.page').then( m => m.FechamentoPage)
   },
+  {
+    path: 'lista-contagens',
+    loadComponent: () => import('./lista-contagens/lista-contagens.page').then( m => m.ListaContagensPage)
+  },
+  { path: '**', redirectTo: 'home' }
+
 ];
